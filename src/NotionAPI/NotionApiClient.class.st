@@ -43,3 +43,10 @@ NotionApiClient >> initialize [
 	client := ZnClient new.
 	client headerAt: 'Notion-Version' put: '2021-05-13'
 ]
+
+{ #category : #accessing }
+NotionApiClient >> search: aString [
+	| data |
+	data := NeoJSONObject newFrom: (Array with: #query->aString).
+	^ client post: (self baseUrl, 'search') contents: (NeoJSONWriter toString: data).
+]
